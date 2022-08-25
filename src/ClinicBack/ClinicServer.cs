@@ -17,7 +17,7 @@
                 }
                 else
                 {
-                    throw new Exception("Entered User Does Not Exist!");
+                    throw new Exception("You’ve entered an incorrect username or password");
                 }
             }
             catch (Exception e)
