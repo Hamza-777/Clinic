@@ -7,4 +7,14 @@
     <Nullable>enable</Nullable>
   </PropertyGroup>
 
+  <ItemGroup>
+    <PackageReference Include="System.Data.SqlClient" Version="4.8.3" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Reference Include="ClinicBack">
+      <HintPath>..\ClinicBack\bin\Debug\net6.0\ClinicBack.dll</HintPath>
+    </Reference>
+  </ItemGroup>
+
 </Project>
