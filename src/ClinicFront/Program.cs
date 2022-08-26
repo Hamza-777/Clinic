@@ -53,8 +53,8 @@ namespace ClinicFront
         public static void LoggedIn()
         {
             bool loginLooping = true, success;
-            string? firstname, lastname, sex;
-            int age = 0;
+            string? firstname, lastname, sex, specialization;
+            int age = 0, patientId, doctorId;
             DateTime? date = null;
 
             while (loginLooping)
@@ -105,6 +105,41 @@ namespace ClinicFront
                         {
                             FrontUtils.StartLoop("Registering a new patient...");
                             FrontUtils.WriteLine($"New patient with Name {firstname + " " + lastname} registered successfully!!");
+                        }
+                        break;
+                    case 3:
+                        Console.Clear();
+                        FrontUtils.WriteLine("Enter following details to make an appointment...");
+                        patientId = FrontUtils.UserInputInt("Enter patiend Id: ");
+                        specialization = FrontUtils.UserInputString("Enter the required specialization: ");
+                        newClinic.ViewDoctors(specialization);
+                        doctorId = FrontUtils.UserInputInt("Enter id of the doctor you want to book an appointment with: ");
+                        date = FrontUtils.UserInputDate("\t  Enter Visit Date (DD/MM/YYYY): ");
+                        while (date == null)
+                        {
+                            date = FrontUtils.UserInputDate("\t  Visit Date cannot be null! Enter a valid Date: ");
+                        }
+                        success = newClinic.MakeAppointment(patientId, doctorId, (DateTime)date);
+                        if(success)
+                        {
+                            FrontUtils.StartLoop("Making an appointment...");
+                            FrontUtils.WriteLine($"Appointment booked with doctor {doctorId} for the date {date} successfully!!");
+                        }
+                        break;
+                    case 4:
+                        Console.Clear();
+                        FrontUtils.WriteLine("Enter following details to cancel an appointment...");
+                        patientId = FrontUtils.UserInputInt("Enter patiend Id: ");
+                        date = FrontUtils.UserInputDate("\t  Enter Visit Date (DD/MM/YYYY): ");
+                        while (date == null)
+                        {
+                            date = FrontUtils.UserInputDate("\t  Visit Date cannot be null! Enter a valid Date: ");
+                        }
+                        success = newClinic.CancelAppointment(patientId, (DateTime)date);
+                        if (success)
+                        {
+                            FrontUtils.StartLoop("Cancelling an appointment...");
+                            FrontUtils.WriteLine($"Appointment cancelled for patient {patientId} for the date {date} successfully!!");
                         }
                         break;
                     case 5:

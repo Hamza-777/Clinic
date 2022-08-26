@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace ClinicBack
 {
-    internal class Doctor
+    public class Doctor
     {
         public int DoctorID { get; set; }
         public string? FirstName { get; set; }

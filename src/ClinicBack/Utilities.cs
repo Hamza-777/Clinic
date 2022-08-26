@@ -105,6 +105,15 @@ namespace ClinicBack
             command.ExecuteNonQuery();
         }
 
+        public static void DeleteAppointment(int appointmentId)
+        {
+            connection = setConnection();
+            command = new SqlCommand("delete from Appointments where appointment_id = @appointment_id");
+            command.Connection = connection;
+            command.Parameters.AddWithValue("@appointment_id", appointmentId);
+            command.ExecuteNonQuery();
+        }
+
         public static bool FindUserWithUserNameAndPassword(string username, string password)
         {
             bool res = false;
@@ -149,6 +158,51 @@ namespace ClinicBack
             }
 
             return requiredPatient;
+        }
+
+        public static Doctor? FindDoctor(int doctorId, List<Doctor> doctors)
+        {
+            Doctor? requiredDoctor = null;
+
+            foreach (Doctor doctor in doctors)
+            {
+                if (doctor.DoctorID == doctorId)
+                {
+                    requiredDoctor = doctor;
+                }
+            }
+
+            return requiredDoctor;
+        }
+
+        public static List<Appointment> FindAppointmentsOnAParticularDateByPatient(int patientId, DateTime date, List<Appointment> appointments)
+        {
+            List<Appointment> requiredAppointments = new List<Appointment>();
+
+            foreach (Appointment appointment in appointments)
+            {
+                if (appointment.PatientId == patientId && appointment.VisitDate == date)
+                {
+                    requiredAppointments.Add(appointment);
+                }
+            }
+
+            return requiredAppointments;
+        }
+
+        public static List<Appointment> FindAppointmentsOnAParticularDateForADoctor(int doctorId, DateTime date, List<Appointment> appointments)
+        {
+            List<Appointment> requiredAppointments = new List<Appointment>();
+
+            foreach (Appointment appointment in appointments)
+            {
+                if (appointment.DoctorId == doctorId && appointment.VisitDate == date)
+                {
+                    requiredAppointments.Add(appointment);
+                }
+            }
+
+            return requiredAppointments;
         }
 
         public static void DisplayError(Exception e)

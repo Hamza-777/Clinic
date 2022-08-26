@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace ClinicBack
 {
-    internal class Appointment
+    public class Appointment
     {
         public int AppointmentId { get; set; }
         public DateTime VisitDate { get; set; }
@@ -23,6 +23,11 @@ namespace ClinicBack
             AppointmentTime = appointmentTime;
             DoctorId = doctorId;
             PatientId = patientId;
+        }
+
+        public override string ToString()
+        {
+            return String.Format($"Appointment Id: {AppointmentId} \nAppointment Date: {VisitDate} \nAppointment Time: {AppointmentTime} \nDoctor ID: {DoctorId} \nPatient ID: {PatientId}");
         }
     }
 }

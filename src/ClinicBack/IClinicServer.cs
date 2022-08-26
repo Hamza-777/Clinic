@@ -8,9 +8,12 @@ namespace ClinicBack
 {
     internal interface IClinicServer
     {
-        bool LoginUser(string username, string password);
-        bool LogoutUser();
-        void ViewDoctors();
+        public bool LoginUser(string username, string password);
+        public bool LogoutUser();
+        public void ViewDoctors();
+        public void ViewDoctors(string specialization);
         public bool RegisterNewPatient(string firstname, string lastname, string sex, int age, DateTime dob);
+        public bool MakeAppointment(int patientId, int doctorId, DateTime visitDate);
+        public bool CancelAppointment(int patientId, DateTime visitDate);
     }
 }

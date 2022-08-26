@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace ClinicBack
 {
-    internal class Patient
+    public class Patient
     {
         public int PatientID { get; set; }
         public string? FirstName { get; set; }
@@ -25,6 +25,11 @@ namespace ClinicBack
             Sex = sex;
             Age = age;
             DOB = dOB;
+        }
+
+        public override string ToString()
+        {
+            return String.Format($"Patient Id: {PatientID} \nFirst Name: {FirstName} \nLast Name: {LastName} \nSex: {Sex} \nAge: {Age} \nDate Of Birth: {DOB}");
         }
     }
 }
