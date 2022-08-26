@@ -13,7 +13,7 @@ namespace ClinicBack
         public string? LastName { get; set; }
         public string? Sex { get; set; }
         public string? Specialization { get; set; }
-        public List<int> VisitingHours { get; set; }
+        public List<string> VisitingHours { get; set; }
 
         public Doctor() { }
 
@@ -25,7 +25,7 @@ namespace ClinicBack
             Sex = sex;
             Specialization = specialization;
             string[] splitted = visitingHours.Split(",");
-            VisitingHours = new List<int>() { int.Parse(splitted[0].Split(" ")[1].Split(":")[0]), int.Parse(splitted[1].Split(" ")[1].Split(":")[0])  };
+            VisitingHours = new List<string>() { splitted[0].Split(" ")[1], splitted[1].Split(" ")[1]  };
         }
 
         public override string ToString()

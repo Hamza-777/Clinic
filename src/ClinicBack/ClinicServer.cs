@@ -36,11 +36,34 @@
             return true;
         }
 
-        public void ListDoctors()
+        public void ViewDoctors()
         {
             foreach(Doctor doctor in doctors)
             {
                 Console.WriteLine(doctor.ToString());
+            }
+        }
+
+        public bool RegisterNewPatient(string firstname, string lastname, string sex, int age, DateTime dob)
+        {
+            try
+            {
+                Patient? requiredPatient = Utilities.FindPatient(firstname, lastname, sex, age, dob, patients);
+
+                if (requiredPatient != null)
+                {
+                    throw new Exception("Patient with given details already exists!");
+                } else {
+                    Patient patient = new Patient(0, firstname, lastname, sex, age, dob);
+                    Utilities.InsertDataIntoPatients(patient);
+                    patients = Utilities.SelectAllPatients();
+                    return true;
+                }
+            }
+            catch (Exception e)
+            {
+                Utilities.DisplayError(e);
+                return false;
             }
         }
     }

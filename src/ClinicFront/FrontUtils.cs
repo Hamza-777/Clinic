@@ -35,33 +35,16 @@ namespace ClinicFront
             Console.ResetColor();
         }
 
-        public static void AdminOptions()
-        {
-            Console.ForegroundColor = ConsoleColor.DarkMagenta;
-            Console.WriteLine("Choose One of the options below to get started...");
-            Console.ResetColor();
-            WriteLine("\t 1. Deposit An Amount In A Bank Account");
-            WriteLine("\t 2. Withdraw An Amount From A Bank Account");
-            WriteLine("\t 3. Transfer An Amount From A Bank Account To Another Bank Account");
-            WriteLine("\t 4. Get Account Details Of An Account");
-            WriteLine("\t 5. Get Details Of All Accounts");
-            WriteLine("\t 6. Get All Tranactions Of A Bank Account");
-            WriteLine("\t 7. Delete An Account");
-            WriteLine("\t 8. Log Out");
-        }
-
         public static void LoggedInOptions()
         {
             Console.ForegroundColor = ConsoleColor.DarkMagenta;
             Console.WriteLine("Choose One of the options below to get started...");
             Console.ResetColor();
-            WriteLine("\t 1. Deposit An Amount In My Bank Account");
-            WriteLine("\t 2. Withdraw An Amount From My Bank Account");
-            WriteLine("\t 3. Transfer An Amount From My Bank Account To Another Bank Account");
-            WriteLine("\t 4. Get My Account Details");
-            WriteLine("\t 5. Get All Tranactions Of My Bank Account");
-            WriteLine("\t 6. Delete Account");
-            WriteLine("\t 7. Log Out");
+            WriteLine("\t 1. View Doctors");
+            WriteLine("\t 2. Add Patient");
+            WriteLine("\t 3. Schedule Appointment");
+            WriteLine("\t 4. Cancel Appointment");
+            WriteLine("\t 5. Log Out");
         }
 
         public static void LoggedOutOptions()
@@ -69,11 +52,8 @@ namespace ClinicFront
             Console.ForegroundColor = ConsoleColor.DarkMagenta;
             Console.WriteLine("Choose One of the options below to get started...");
             Console.ResetColor();
-            WriteLine("\t 1. Create A New Account");
-            WriteLine("\t 2. Register A New User");
-            WriteLine("\t 3. LogIn To Your Account");
-            WriteLine("\t 4. LogIn As Admin");
-            WriteLine("\t 5. Exit");
+            WriteLine("\t 1. Login To Your Account");
+            WriteLine("\t 2. Exit Application");
         }
 
         public static int UserInputInt(string message)
@@ -87,6 +67,13 @@ namespace ClinicFront
         {
             WriteLine(message, false);
             string? res = ReadString();
+            return res;
+        }
+
+        public static DateTime UserInputDate(string message)
+        {
+            WriteLine(message, false);
+            DateTime res = Convert.ToDateTime(ReadString());
             return res;
         }
 
@@ -150,7 +137,7 @@ namespace ClinicFront
         public static string ReadPassword()
         {
             string password = "";
-            WriteLine("\t Enter password: ", false);
+            WriteLine("Enter password: ", false);
             while (true)
             {
                 var key = Console.ReadKey(true);

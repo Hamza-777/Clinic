@@ -80,6 +80,31 @@ namespace ClinicBack
             return appointmentsList;
         }
 
+        public static void InsertDataIntoPatients(Patient patient)
+        {
+            connection = setConnection();
+            command = new SqlCommand("insert into Patients values(@firstname, @lastname, @sex, @age, @dob)");
+            command.Connection = connection;
+            command.Parameters.AddWithValue("@firstname", patient.FirstName);
+            command.Parameters.AddWithValue("@lastname", patient.LastName);
+            command.Parameters.AddWithValue("@sex", patient.Sex);
+            command.Parameters.AddWithValue("@age", patient.Age);
+            command.Parameters.AddWithValue("@dob", patient.DOB);
+            command.ExecuteNonQuery();
+        }
+
+        public static void InsertDataIntoAppointments(Appointment appointment)
+        {
+            connection = setConnection();
+            command = new SqlCommand("insert into Appointments values(@visit_date, @appointment_time, @doctor_id, @patient_id)");
+            command.Connection = connection;
+            command.Parameters.AddWithValue("@visit_date", appointment.VisitDate);
+            command.Parameters.AddWithValue("@appointment_time", appointment.AppointmentTime);
+            command.Parameters.AddWithValue("@doctor_id", appointment.DoctorId);
+            command.Parameters.AddWithValue("@patient_id", appointment.PatientId);
+            command.ExecuteNonQuery();
+        }
+
         public static bool FindUserWithUserNameAndPassword(string username, string password)
         {
             bool res = false;
@@ -102,6 +127,28 @@ namespace ClinicBack
             }
             dr.Close();
             return res;
+        }
+
+        public static Patient? FindPatient(string firstname, string lastname, string sex, int age, DateTime dob, List<Patient> patients)
+        {
+            Patient? requiredPatient = null;
+
+            foreach (Patient patient in patients)
+            {
+                if (patient.FirstName == firstname && patient.LastName == lastname && patient.Sex == sex && patient.DOB == dob)
+                {
+                    if(age != patient.Age)
+                    {
+                        requiredPatient = patient;
+                    }
+                    else
+                    {
+                        requiredPatient = patient;
+                    }
+                }
+            }
+
+            return requiredPatient;
         }
 
         public static void DisplayError(Exception e)

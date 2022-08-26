@@ -10,5 +10,7 @@ namespace ClinicBack
     {
         bool LoginUser(string username, string password);
         bool LogoutUser();
+        void ViewDoctors();
+        public bool RegisterNewPatient(string firstname, string lastname, string sex, int age, DateTime dob);
     }
 }
