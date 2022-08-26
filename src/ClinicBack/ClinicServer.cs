@@ -3,6 +3,9 @@
     public class ClinicServer : IClinicServer
     {
         public static string? loggedInUser = null;
+        static List<Doctor> doctors = Utilities.SelectAllDoctors();
+        static List<Patient> patients = Utilities.SelectAllPatients();
+        static List<Appointment> appointments = Utilities.SelectAllAppointments();
 
         public bool LoginUser(string username, string password)
         {
@@ -31,6 +34,14 @@
         {
             loggedInUser = null;
             return true;
+        }
+
+        public void ListDoctors()
+        {
+            foreach(Doctor doctor in doctors)
+            {
+                Console.WriteLine(doctor.ToString());
+            }
         }
     }
 }

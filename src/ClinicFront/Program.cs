@@ -10,7 +10,6 @@ namespace ClinicFront
         public static void Main(string[] args)
         {
             FrontUtils.Welcome();
-
             string? username = FrontUtils.UserInputString("Enter username: ");
             while (username == "" || username == null)
             {

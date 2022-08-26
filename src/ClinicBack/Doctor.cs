@@ -8,37 +8,29 @@ namespace ClinicBack
 {
     internal class Doctor
     {
-        List<int> visitingHours = new List<int>();
         public int DoctorID { get; set; }
         public string? FirstName { get; set; }
         public string? LastName { get; set; }
         public string? Sex { get; set; }
         public string? Specialization { get; set; }
-        public List<int> VisitingHours {
-            get
-            {
-                return visitingHours ?? (visitingHours = new List<int>());
-            }
-            set
-            {
-                string[] splitted = value.ToString().Split(",");
-                foreach (string s in splitted)
-                {
-                    visitingHours.Add(int.Parse(s.Split(" ")[1]));
-                }
-            }
-        }
+        public List<int> VisitingHours { get; set; }
 
         public Doctor() { }
 
-        public Doctor(int doctorID, string? firstName, string? lastName, string? sex, string? specialization, List<int> visitingHours)
+        public Doctor(int doctorID, string? firstName, string? lastName, string? sex, string? specialization, string? visitingHours)
         {
             DoctorID = doctorID;
             FirstName = firstName;
             LastName = lastName;
             Sex = sex;
             Specialization = specialization;
-            VisitingHours = visitingHours;
+            string[] splitted = visitingHours.Split(",");
+            VisitingHours = new List<int>() { int.Parse(splitted[0].Split(" ")[1].Split(":")[0]), int.Parse(splitted[1].Split(" ")[1].Split(":")[0])  };
+        }
+
+        public override string ToString()
+        {
+            return String.Format($"Doctor Id: {DoctorID} \nFirst Name: {FirstName} \nLast Name: {LastName} \nSex: {Sex} \nSpecialization: {Specialization} \nVisiting Hours: From {VisitingHours[0]} To {VisitingHours[1]}");
         }
     }
 }

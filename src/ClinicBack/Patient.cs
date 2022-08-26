@@ -13,11 +13,11 @@ namespace ClinicBack
         public string? LastName { get; set; }
         public string? Sex { get; set; }
         public int Age { get; set; }
-        public DateOnly DOB { get; set; }
+        public DateTime DOB { get; set; }
 
         public Patient() { }
 
-        public Patient(int patientID, string? firstName, string? lastName, string? sex, int age, DateOnly dOB)
+        public Patient(int patientID, string? firstName, string? lastName, string? sex, int age, DateTime dOB)
         {
             PatientID = patientID;
             FirstName = firstName;
