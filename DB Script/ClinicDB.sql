@@ -42,3 +42,11 @@ sex varchar(10),
 age int not null,
 dob date not null
 )
+
+create table Appointments (
+appointment_id int identity(1, 1) not null primary key,
+visit_date date not null,
+appointment_time varchar(10) not null,
+doctor_id int not null foreign key references Doctors(doctor_id),
+patient_id int not null foreign key references Patients(patient_id)
+)
