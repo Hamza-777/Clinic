@@ -86,6 +86,7 @@
                 List<Appointment> appointmentsForEnteredDate = Utilities.FindAppointmentsOnAParticularDateForADoctor(doctorId, visitDate, appointments);
                 List<string> bookedSlots = new List<string>();
                 List<string> availableSlots = new List<string>();
+                int currentHour = DateTime.Now.Hour;
 
                 foreach (Appointment appointment in appointmentsForEnteredDate)
                 {
@@ -97,7 +98,10 @@
                 {
                     if(!bookedSlots.Contains(Convert.ToString(i)))
                     {
-                        availableSlots.Add(i.ToString());
+                        if(visitDate == DateTime.Now && i < currentHour)
+                        {
+                            availableSlots.Add(i.ToString());
+                        }
                     }
                 }
 
@@ -109,9 +113,18 @@
                     }
                     Console.WriteLine("");
                     Console.ForegroundColor = ConsoleColor.DarkYellow;
-                    Console.Write("Choose a time slot fromabove options: ");
+                    Console.Write("Choose a time slot from the options above: ");
                     Console.ForegroundColor = ConsoleColor.DarkGreen;
                     string? slotNeeded = Console.ReadLine();
+                    while (slotNeeded == "" || slotNeeded == null || !availableSlots.Contains(slotNeeded))
+                    {
+                        Console.ForegroundColor= ConsoleColor.DarkRed;
+                        Console.Write("Entered slot cannot be null or anything other than the available slots!!");
+                        Console.ForegroundColor = ConsoleColor.DarkYellow;
+                        Console.Write("Entered slot cannot be null or anything other than the available slots: ");
+                        Console.ForegroundColor = ConsoleColor.DarkGreen;
+                        slotNeeded = Console.ReadLine();
+                    }
                     Console.ResetColor();
 
                     Appointment appointment = new Appointment(0, visitDate, slotNeeded, doctorId, patientId);
@@ -135,6 +148,12 @@
             try
             {
                 List<Appointment> requiredAppointments = Utilities.FindAppointmentsOnAParticularDateByPatient(patientId, visitDate, appointments);
+                List<int> appointmentIds = new List<int>();
+
+                foreach(Appointment appointment in requiredAppointments)
+                {
+                    appointmentIds.Add(appointment.AppointmentId);
+                }
 
                 if (requiredAppointments.Count == 0)
                 {
@@ -154,6 +173,13 @@
                     Console.Write("Choose an appointment id from above appointments for cancellation: ");
                     Console.ForegroundColor = ConsoleColor.DarkGreen;
                     int appointmentId = Convert.ToInt32(Console.ReadLine());
+                    while (!appointmentIds.Contains(appointmentId))
+                    {
+                        Console.ForegroundColor = ConsoleColor.DarkYellow;
+                        Console.Write("Please choose an appointment from the options above: ");
+                        Console.ForegroundColor = ConsoleColor.DarkGreen;
+                        appointmentId = Convert.ToInt32(Console.ReadLine());
+                    }
                     Console.ResetColor();
 
                     Utilities.DeleteAppointment(appointmentId);
