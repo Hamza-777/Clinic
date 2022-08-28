@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 
 namespace ClinicFront
@@ -147,6 +148,39 @@ namespace ClinicFront
             }
 
             return password;
+        }
+
+        public static bool ValidateUserName(string? username)
+        {
+            Regex rgx = new Regex("[^A-Za-z0-9]");
+            for(int i = 0; i < username.Length; i++)
+            {
+                if (rgx.IsMatch(username[i].ToString()))
+                {
+                    return false;
+                }
+            }
+            return true;
+        }
+
+        public static int CalculateAge(DateTime dateOfBirth)
+        {
+            int age = 0;
+            age = DateTime.Now.Year - dateOfBirth.Year;
+            if (DateTime.Now.DayOfYear < dateOfBirth.DayOfYear)
+                age = age - 1;
+
+            return age;
+        }
+
+        public static bool ValidateDateFormat(DateTime date)
+        {
+            Regex regex = new Regex(@"(((0|1)[0-9]|2[0-9]|3[0-1])\/(0[1-9]|1[0-2])\/((19|20)\d\d))$");
+
+            //Verify whether date entered in dd/MM/yyyy format.
+            bool isValid = regex.IsMatch(date.ToShortDateString().Trim());
+
+            return isValid;
         }
 
     }

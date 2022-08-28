@@ -10,8 +10,9 @@ namespace ClinicBack
     {
         public bool LoginUser(string username, string password);
         public bool LogoutUser();
-        public void ViewDoctors();
-        public void ViewDoctors(string specialization);
+        public List<Doctor> ViewDoctors();
+        public List<Doctor> ViewDoctors(string specialization);
+        public List<int> PatientsList();
         public bool RegisterNewPatient(string firstname, string lastname, string sex, int age, DateTime dob);
         public bool MakeAppointment(int patientId, int doctorId, DateTime visitDate);
         public bool CancelAppointment(int patientId, DateTime visitDate);

@@ -36,23 +36,42 @@
             return true;
         }
 
-        public void ViewDoctors()
+        public List<Doctor> ViewDoctors()
         {
             foreach(Doctor doctor in doctors)
             {
                 Console.WriteLine(doctor.ToString());
             }
+
+            return doctors;
         }
 
-        public void ViewDoctors(string specialization)
+        public List<Doctor> ViewDoctors(string specialization)
         {
+            List<Doctor> specializedDoctors = new List<Doctor>();
+
             foreach (Doctor doctor in doctors)
             {
                 if (doctor.Specialization == specialization)
                 {
                     Console.WriteLine(doctor.ToString());
+                    specializedDoctors.Add(doctor);
                 }
             }
+
+            return specializedDoctors;
+        }
+
+        public List<int> PatientsList()
+        {
+            List<int> patientsList = new List<int>();
+
+            foreach(Patient patient in patients)
+            {
+                patientsList.Add(patient.PatientID);
+            }
+
+            return patientsList;
         }
 
         public bool RegisterNewPatient(string firstname, string lastname, string sex, int age, DateTime dob)
@@ -119,9 +138,9 @@
                     while (slotNeeded == "" || slotNeeded == null || !availableSlots.Contains(slotNeeded))
                     {
                         Console.ForegroundColor= ConsoleColor.DarkRed;
-                        Console.Write("Entered slot cannot be null or anything other than the available slots!!");
+                        Console.WriteLine("Entered slot cannot be null or anything other than the available slots!!");
                         Console.ForegroundColor = ConsoleColor.DarkYellow;
-                        Console.Write("Entered slot cannot be null or anything other than the available slots: ");
+                        Console.Write("Enter a slot: ");
                         Console.ForegroundColor = ConsoleColor.DarkGreen;
                         slotNeeded = Console.ReadLine();
                     }
@@ -175,6 +194,8 @@
                     int appointmentId = Convert.ToInt32(Console.ReadLine());
                     while (!appointmentIds.Contains(appointmentId))
                     {
+                        Console.ForegroundColor = ConsoleColor.DarkRed;
+                        Console.WriteLine("Entered appointment id is not one from the above options!!");
                         Console.ForegroundColor = ConsoleColor.DarkYellow;
                         Console.Write("Please choose an appointment from the options above: ");
                         Console.ForegroundColor = ConsoleColor.DarkGreen;

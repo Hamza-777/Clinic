@@ -23,10 +23,6 @@ namespace ClinicFront
                     case 1:
                         Console.Clear();
                         username = FrontUtils.UserInputString("Enter username: ");
-                        while (username == "" || username == null)
-                        {
-                            username = FrontUtils.UserInputString("Username cannot be null! Enter a valid username: ");
-                        }
                         password = FrontUtils.ReadPassword();
                         bool success = newClinic.LoginUser(username, password);
 
@@ -54,8 +50,12 @@ namespace ClinicFront
         {
             bool loginLooping = true, success;
             string? firstname, lastname, sex, specialization;
-            int age = 0, patientId, doctorId;
-            DateTime? date = null;
+            int age, patientId, doctorId;
+            DateTime? date, currentDate = DateTime.Now;
+            List<string> sexes = new List<string> { "m", "f", "others"};
+            List<string> specials = new List<string> { "general", "internal medicine", "pediatrics", "orthopedics", "opthalmology"};
+            List<int> doctorIds = new List<int>(), patientsList;
+            List<Doctor> doctors;
 
             while (loginLooping)
             {
@@ -76,29 +76,40 @@ namespace ClinicFront
                         Console.Clear();
                         FrontUtils.WriteLine("Enter following details to register a new patient...");
                         firstname = FrontUtils.UserInputString("\t  Enter First Name: ");
-                        while (firstname == "" || firstname == null)
+                        while (firstname == "" || firstname == null || FrontUtils.ValidateUserName(firstname) == false)
                         {
-                            firstname = FrontUtils.UserInputString("\t  First Name cannot be null! Enter a valid First Name: ");
+                            Console.ForegroundColor = ConsoleColor.DarkRed;
+                            Console.WriteLine("First Name cannot be null or contain special characters!!");
+                            firstname = FrontUtils.UserInputString("\t  Enter a valid First Name: ");
                         }
                         lastname = FrontUtils.UserInputString("\t  Enter Last Name: ");
-                        while (lastname == "" || lastname == null)
+                        while (lastname == "" || lastname == null || FrontUtils.ValidateUserName(lastname) == false)
                         {
-                            lastname = FrontUtils.UserInputString("\t  Last Name cannot be null! Enter a valid Last Name: ");
+                            Console.ForegroundColor = ConsoleColor.DarkRed;
+                            Console.WriteLine("Last Name cannot be null or contain special characters!!");
+                            lastname = FrontUtils.UserInputString("\t  Enter a valid Last Name: ");
                         }
                         sex = FrontUtils.UserInputString("\t  Enter Sex (M/F/Others): ");
-                        while (sex == "" || sex == null)
+                        while (!sexes.Contains(sex.ToLower()))
                         {
-                            sex = FrontUtils.UserInputString("\t  Sex cannot be null! Enter a valid Sex: ");
+                            Console.ForegroundColor = ConsoleColor.DarkRed;
+                            Console.WriteLine("Sex value has to be on of these (M / F / Others)!!");
+                            sex = FrontUtils.UserInputString("\t  Enter a valid Sex: ");
                         }
                         age = FrontUtils.UserInputInt("\t  Enter Age (0 to 120): ");
                         while (age < 0 || age > 120)
                         {
-                            age = FrontUtils.UserInputInt("\t  Age must be between 0 to 120! Enter a valid Age: ");
+                            Console.ForegroundColor = ConsoleColor.DarkRed;
+                            Console.WriteLine("Age must be between 0 to 120!!");
+                            age = FrontUtils.UserInputInt("\t  Enter a valid Age: ");
                         }
                         date = FrontUtils.UserInputDate("\t  Enter Date of Birth (DD/MM/YYYY): ");
-                        while (date == null)
+                        while (date == null || age != FrontUtils.CalculateAge((DateTime)date) || !FrontUtils.ValidateDateFormat((DateTime)date))
                         {
-                            date = FrontUtils.UserInputDate("\t  Date Of Birth cannot be null! Enter a valid Date: ");
+
+                            Console.ForegroundColor = ConsoleColor.DarkRed;
+                            Console.WriteLine("Date cannot be null or contradicting to the entered age or in a format other than (dd/mm/yyyy)!!");
+                            date = FrontUtils.UserInputDate("\t  Enter a valid Date: ");
                         }
                         success = newClinic.RegisterNewPatient(firstname, lastname, sex, age, (DateTime)date);
                         if (success)
@@ -110,14 +121,39 @@ namespace ClinicFront
                     case 3:
                         Console.Clear();
                         FrontUtils.WriteLine("Enter following details to make an appointment...");
+                        patientsList = newClinic.PatientsList();
                         patientId = FrontUtils.UserInputInt("Enter patiend Id: ");
-                        specialization = FrontUtils.UserInputString("Enter the required specialization: ");
-                        newClinic.ViewDoctors(specialization);
-                        doctorId = FrontUtils.UserInputInt("Enter id of the doctor you want to book an appointment with: ");
-                        date = FrontUtils.UserInputDate("\t  Enter Visit Date (DD/MM/YYYY): ");
-                        while (date == null)
+                        while (!patientsList.Contains(patientId))
                         {
-                            date = FrontUtils.UserInputDate("\t  Visit Date cannot be null! Enter a valid Date: ");
+                            Console.ForegroundColor = ConsoleColor.DarkRed;
+                            Console.WriteLine("Entered patient Id does not exist!!");
+                            patientId = FrontUtils.UserInputInt("Enter patiend Id: ");
+                        }
+                        specialization = FrontUtils.UserInputString("Enter the required specialization (General/Internal Medicine/Pediatrics/Orthopedics/Opthalmology): ");
+                        while (!specials.Contains(specialization.ToLower()))
+                        {
+                            Console.ForegroundColor = ConsoleColor.DarkRed;
+                            Console.WriteLine("Specialization value has to be on of these (General/Internal Medicine/Pediatrics/Orthopedics/Opthalmology)!!");
+                            specialization = FrontUtils.UserInputString("\t  Enter a valid Specialization: ");
+                        }
+                        doctors = newClinic.ViewDoctors(specialization);
+                        foreach(Doctor doctor in doctors)
+                        {
+                            doctorIds.Add(doctor.DoctorID);
+                        }
+                        doctorId = FrontUtils.UserInputInt("Enter id of the doctor you want to book an appointment with: ");
+                        while (!doctorIds.Contains(doctorId))
+                        {
+                            Console.ForegroundColor = ConsoleColor.DarkRed;
+                            Console.WriteLine("Doctor Id must be one from the options above!!");
+                            doctorId = FrontUtils.UserInputInt("Enter id of the doctor you want to book an appointment with: ");
+                        }
+                        date = FrontUtils.UserInputDate("\t  Enter Visit Date (DD/MM/YYYY): ");
+                        while (date == null || date < currentDate || !FrontUtils.ValidateDateFormat((DateTime)date))
+                        {
+                            Console.ForegroundColor = ConsoleColor.DarkRed;
+                            Console.WriteLine("Visit Date cannot be null or lesser than todays date or in a format other than (dd/mm/yyyy)!!");
+                            date = FrontUtils.UserInputDate("\t  Enter a valid Date: ");
                         }
                         success = newClinic.MakeAppointment(patientId, doctorId, (DateTime)date);
                         if(success)
@@ -129,11 +165,20 @@ namespace ClinicFront
                     case 4:
                         Console.Clear();
                         FrontUtils.WriteLine("Enter following details to cancel an appointment...");
+                        patientsList = newClinic.PatientsList();
                         patientId = FrontUtils.UserInputInt("Enter patiend Id: ");
-                        date = FrontUtils.UserInputDate("\t  Enter Visit Date (DD/MM/YYYY): ");
-                        while (date == null)
+                        while (!patientsList.Contains(patientId))
                         {
-                            date = FrontUtils.UserInputDate("\t  Visit Date cannot be null! Enter a valid Date: ");
+                            Console.ForegroundColor = ConsoleColor.DarkRed;
+                            Console.WriteLine("Entered patient Id does not exist!!");
+                            patientId = FrontUtils.UserInputInt("Enter patiend Id: ");
+                        }
+                        date = FrontUtils.UserInputDate("\t  Enter Visit Date (DD/MM/YYYY): ");
+                        while (date == null || date < currentDate || !FrontUtils.ValidateDateFormat((DateTime)date))
+                        {
+                            Console.ForegroundColor = ConsoleColor.DarkRed;
+                            Console.WriteLine("Visit Date cannot be null or lesser than todays date or in a format other than (dd/mm/yyyy)!!");
+                            date = FrontUtils.UserInputDate("\t  Enter a valid Date: ");
                         }
                         success = newClinic.CancelAppointment(patientId, (DateTime)date);
                         if (success)
