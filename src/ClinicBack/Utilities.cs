@@ -211,5 +211,10 @@ namespace ClinicBack
             Console.WriteLine(e.Message);
             Console.ResetColor();
         }
+
+        public static string ChangeFormat(DateTime date)
+        {
+            return String.Join("/", date.ToShortDateString().Split("-"));
+        }
     }
 }

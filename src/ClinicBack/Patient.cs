@@ -29,7 +29,7 @@ namespace ClinicBack
 
         public override string ToString()
         {
-            return String.Format($"Patient Id: {PatientID} \nFirst Name: {FirstName} \nLast Name: {LastName} \nSex: {Sex} \nAge: {Age} \nDate Of Birth: {DOB}");
+            return String.Format($"Patient Id: {PatientID} \nFirst Name: {FirstName} \nLast Name: {LastName} \nSex: {Sex} \nAge: {Age} \nDate Of Birth: {Utilities.ChangeFormat(DOB)}");
         }
     }
 }

@@ -27,7 +27,7 @@ namespace ClinicBack
 
         public override string ToString()
         {
-            return String.Format($"Appointment Id: {AppointmentId} \nAppointment Date: {VisitDate} \nAppointment Time: {AppointmentTime} \nDoctor ID: {DoctorId} \nPatient ID: {PatientId}");
+            return String.Format($"Appointment Id: {AppointmentId} \nAppointment Date: {Utilities.ChangeFormat(VisitDate)} \nAppointment Time: {AppointmentTime} \nDoctor ID: {DoctorId} \nPatient ID: {PatientId}");
         }
     }
 }

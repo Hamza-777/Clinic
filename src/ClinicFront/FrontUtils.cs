@@ -74,7 +74,15 @@ namespace ClinicFront
         public static DateTime UserInputDate(string message)
         {
             WriteLine(message, false);
-            DateTime res = Convert.ToDateTime(ReadString());
+            string date = ReadString();
+            while (!ValidateDateFormat(date))
+            {
+                Console.ForegroundColor = ConsoleColor.DarkRed;
+                Console.WriteLine("Visit Date cannot be in a format other than dd/mm/yyyy!!");
+                WriteLine(message, false);
+                date = ReadString();
+            }
+            DateTime res = Convert.ToDateTime(date);
             return res;
         }
 
@@ -173,15 +181,35 @@ namespace ClinicFront
             return age;
         }
 
-        public static bool ValidateDateFormat(DateTime date)
+        public static bool ValidateDateFormat(string date)
         {
             Regex regex = new Regex(@"(((0|1)[0-9]|2[0-9]|3[0-1])\/(0[1-9]|1[0-2])\/((19|20)\d\d))$");
 
             //Verify whether date entered in dd/MM/yyyy format.
-            bool isValid = regex.IsMatch(date.ToShortDateString().Trim());
+            bool isValid = regex.IsMatch(date.Trim());
 
             return isValid;
         }
 
+        public static bool IsValidDate(DateTime dateone, DateTime datetwo)
+        {
+            if(dateone.Year >= datetwo.Year)
+            {
+                if(dateone.Month >= datetwo.Month)
+                {
+                    if(dateone.Day >= datetwo.Day)
+                    {
+                        return true;
+                    }
+                }
+            }
+
+            return false;
+        }
+
+        public static string ChangeFormat(DateTime date)
+        {
+            return String.Join("/", date.ToShortDateString().Split("-"));
+        }
     }
 }

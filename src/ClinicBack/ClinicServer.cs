@@ -52,7 +52,7 @@
 
             foreach (Doctor doctor in doctors)
             {
-                if (doctor.Specialization == specialization)
+                if (doctor.Specialization.ToLower() == specialization)
                 {
                     Console.WriteLine(doctor.ToString());
                     specializedDoctors.Add(doctor);
@@ -106,6 +106,7 @@
                 List<string> bookedSlots = new List<string>();
                 List<string> availableSlots = new List<string>();
                 int currentHour = DateTime.Now.Hour;
+                DateOnly dateonly = new DateOnly(visitDate.Year, visitDate.Month, visitDate.Day);
 
                 foreach (Appointment appointment in appointmentsForEnteredDate)
                 {
@@ -117,7 +118,14 @@
                 {
                     if(!bookedSlots.Contains(Convert.ToString(i)))
                     {
-                        if(visitDate == DateTime.Now && i < currentHour)
+                        if(dateonly.Equals(new DateOnly(DateTime.Now.Year, DateTime.Now.Month, DateTime.Now.Day)))
+                        {
+                            if(i > currentHour)
+                            {
+                                availableSlots.Add(i.ToString());
+                            }
+                        }
+                        else
                         {
                             availableSlots.Add(i.ToString());
                         }

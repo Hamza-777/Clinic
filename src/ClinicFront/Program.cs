@@ -104,11 +104,11 @@ namespace ClinicFront
                             age = FrontUtils.UserInputInt("\t  Enter a valid Age: ");
                         }
                         date = FrontUtils.UserInputDate("\t  Enter Date of Birth (DD/MM/YYYY): ");
-                        while (date == null || age != FrontUtils.CalculateAge((DateTime)date) || !FrontUtils.ValidateDateFormat((DateTime)date))
+                        while (date == null || age != FrontUtils.CalculateAge((DateTime)date))
                         {
 
                             Console.ForegroundColor = ConsoleColor.DarkRed;
-                            Console.WriteLine("Date cannot be null or contradicting to the entered age or in a format other than (dd/mm/yyyy)!!");
+                            Console.WriteLine("Date cannot be null or contradicting to the entered age!!");
                             date = FrontUtils.UserInputDate("\t  Enter a valid Date: ");
                         }
                         success = newClinic.RegisterNewPatient(firstname, lastname, sex, age, (DateTime)date);
@@ -149,17 +149,17 @@ namespace ClinicFront
                             doctorId = FrontUtils.UserInputInt("Enter id of the doctor you want to book an appointment with: ");
                         }
                         date = FrontUtils.UserInputDate("\t  Enter Visit Date (DD/MM/YYYY): ");
-                        while (date == null || date < currentDate || !FrontUtils.ValidateDateFormat((DateTime)date))
+                        while (date == null || !FrontUtils.IsValidDate((DateTime)date, (DateTime)currentDate))
                         {
                             Console.ForegroundColor = ConsoleColor.DarkRed;
-                            Console.WriteLine("Visit Date cannot be null or lesser than todays date or in a format other than (dd/mm/yyyy)!!");
+                            Console.WriteLine("Visit Date cannot be null or lesser than todays date!!");
                             date = FrontUtils.UserInputDate("\t  Enter a valid Date: ");
                         }
                         success = newClinic.MakeAppointment(patientId, doctorId, (DateTime)date);
                         if(success)
                         {
                             FrontUtils.StartLoop("Making an appointment...");
-                            FrontUtils.WriteLine($"Appointment booked with doctor {doctorId} for the date {date} successfully!!");
+                            FrontUtils.WriteLine($"Appointment booked with doctor {doctorId} for the date {FrontUtils.ChangeFormat((DateTime)date)} successfully!!");
                         }
                         break;
                     case 4:
@@ -174,17 +174,17 @@ namespace ClinicFront
                             patientId = FrontUtils.UserInputInt("Enter patiend Id: ");
                         }
                         date = FrontUtils.UserInputDate("\t  Enter Visit Date (DD/MM/YYYY): ");
-                        while (date == null || date < currentDate || !FrontUtils.ValidateDateFormat((DateTime)date))
+                        while (date == null || !FrontUtils.IsValidDate((DateTime)date, (DateTime)currentDate))
                         {
                             Console.ForegroundColor = ConsoleColor.DarkRed;
-                            Console.WriteLine("Visit Date cannot be null or lesser than todays date or in a format other than (dd/mm/yyyy)!!");
+                            Console.WriteLine("Visit Date cannot be null or lesser than todays date!!");
                             date = FrontUtils.UserInputDate("\t  Enter a valid Date: ");
                         }
                         success = newClinic.CancelAppointment(patientId, (DateTime)date);
                         if (success)
                         {
                             FrontUtils.StartLoop("Cancelling an appointment...");
-                            FrontUtils.WriteLine($"Appointment cancelled for patient {patientId} for the date {date} successfully!!");
+                            FrontUtils.WriteLine($"Appointment cancelled for patient {patientId} for the date {FrontUtils.ChangeFormat((DateTime)date)} successfully!!");
                         }
                         break;
                     case 5:

@@ -50,3 +50,6 @@ appointment_time varchar(10) not null,
 doctor_id int not null foreign key references Doctors(doctor_id),
 patient_id int not null foreign key references Patients(patient_id)
 )
+
+select * from Patients
+select * from Appointments
