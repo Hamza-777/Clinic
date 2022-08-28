@@ -78,7 +78,7 @@
         {
             try
             {
-                Patient? requiredPatient = Utilities.FindPatient(firstname, lastname, sex, age, dob, patients);
+                Patient? requiredPatient = Utilities.FindPatient(firstname, lastname, Utilities.TitleCase(sex), age, dob, patients);
 
                 if (requiredPatient != null)
                 {
