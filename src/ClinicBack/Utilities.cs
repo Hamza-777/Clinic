@@ -105,6 +105,14 @@ namespace ClinicBack
             command.ExecuteNonQuery();
         }
 
+        public static void UpdatePatientAge(Patient patient)
+        {
+            connection = setConnection();
+            command = new SqlCommand($"update Patients set age = {patient.Age} where patient_id = {patient.PatientID}");
+            command.Connection = connection;
+            command.ExecuteNonQuery();
+        }
+
         public static void DeleteAppointment(int appointmentId)
         {
             connection = setConnection();
@@ -142,15 +150,18 @@ namespace ClinicBack
         {
             Patient? requiredPatient = null;
 
+
             foreach (Patient patient in patients)
             {
                 if (patient.FirstName == firstname && patient.LastName == lastname && patient.Sex == sex && patient.DOB == dob)
                 {
-                    if(age != patient.Age)
+                    if(age > patient.Age)
                     {
+                        UpdatePatientAge(patient);
                         requiredPatient = patient;
+                        requiredPatient.Age = age;
                     }
-                    else
+                    else if(age == patient.Age)
                     {
                         requiredPatient = patient;
                     }

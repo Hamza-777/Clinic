@@ -26,9 +26,17 @@ namespace ClinicTest
         [TestMethod]
         public void AddPatientSuccess()
         {
-            bool addPatientSuccess = server.RegisterNewPatient("Hrishi", "Dude", "M", 21, Convert.ToDateTime("08/11/2000"));
+            bool addPatientSuccess = server.RegisterNewPatient("Amir", "Gauhar", "M", 22, Convert.ToDateTime("08/11/1999"));
 
             Assert.IsTrue(addPatientSuccess);
+        }
+
+        [TestMethod]
+        public void AddPatientFail()
+        {
+            bool addPatientSuccess = server.RegisterNewPatient("Hrishi", "Dude", "M", 21, Convert.ToDateTime("08/11/2000"));
+
+            Assert.IsFalse(addPatientSuccess);
         }
     }
 }
