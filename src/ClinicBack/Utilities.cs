@@ -9,9 +9,11 @@ namespace ClinicBack
 {
     internal class Utilities
     {
+        // ADO.NET sql connection and command variables
         private static SqlConnection? connection;
         private static SqlCommand? command;
 
+        // Establishes connection with the local database
         private static SqlConnection setConnection()
         {
             string connectionString = "Data Source=.;Initial Catalog=ClinicDB;Integrated Security=true";
@@ -20,6 +22,7 @@ namespace ClinicBack
             return connection;
         }
 
+        // Get a list of all doctors from local database
         public static List<Doctor> SelectAllDoctors()
         {
             List<Doctor> doctorsList = new List<Doctor>();
@@ -40,6 +43,7 @@ namespace ClinicBack
             return doctorsList;
         }
 
+        // Get a list of all patients from the local database
         public static List<Patient> SelectAllPatients()
         {
             List<Patient> patientsList = new List<Patient>();
@@ -60,6 +64,7 @@ namespace ClinicBack
             return patientsList;
         }
 
+        // Get a list of all appointments from the local database
         public static List<Appointment> SelectAllAppointments()
         {
             List<Appointment> appointmentsList = new List<Appointment>();
@@ -80,6 +85,7 @@ namespace ClinicBack
             return appointmentsList;
         }
 
+        // Insert a new patient into the local database
         public static void InsertDataIntoPatients(Patient patient)
         {
             connection = setConnection();
@@ -93,6 +99,7 @@ namespace ClinicBack
             command.ExecuteNonQuery();
         }
 
+        // Insert a new appointment into the local database
         public static void InsertDataIntoAppointments(Appointment appointment)
         {
             connection = setConnection();
@@ -105,6 +112,7 @@ namespace ClinicBack
             command.ExecuteNonQuery();
         }
 
+        // Method to update the patient age in the local database
         public static void UpdatePatientAge(Patient patient)
         {
             connection = setConnection();
@@ -113,6 +121,7 @@ namespace ClinicBack
             command.ExecuteNonQuery();
         }
 
+        //  Method to delete an appointment
         public static void DeleteAppointment(int appointmentId)
         {
             connection = setConnection();
@@ -122,6 +131,7 @@ namespace ClinicBack
             command.ExecuteNonQuery();
         }
 
+        // Returns true if the user with given username and password exists in the local database
         public static bool FindUserWithUserNameAndPassword(string username, string password)
         {
             bool res = false;
@@ -146,6 +156,7 @@ namespace ClinicBack
             return res;
         }
 
+        // Find the patient based on the collected information
         public static Patient? FindPatient(string firstname, string lastname, string sex, int age, DateTime dob, List<Patient> patients)
         {
             Patient? requiredPatient = null;
@@ -171,6 +182,7 @@ namespace ClinicBack
             return requiredPatient;
         }
 
+        // Find the doctor based on the doctor id
         public static Doctor? FindDoctor(int doctorId, List<Doctor> doctors)
         {
             Doctor? requiredDoctor = null;
@@ -186,6 +198,7 @@ namespace ClinicBack
             return requiredDoctor;
         }
 
+        // Method to get the list of appointments on a particular date by the given patient id
         public static List<Appointment> FindAppointmentsOnAParticularDateByPatient(int patientId, DateTime date, List<Appointment> appointments)
         {
             List<Appointment> requiredAppointments = new List<Appointment>();
@@ -201,6 +214,7 @@ namespace ClinicBack
             return requiredAppointments;
         }
 
+        // Get the list of appointments made for a particular doctors by doctor id and on a given date
         public static List<Appointment> FindAppointmentsOnAParticularDateForADoctor(int doctorId, DateTime date, List<Appointment> appointments)
         {
             List<Appointment> requiredAppointments = new List<Appointment>();
@@ -216,6 +230,7 @@ namespace ClinicBack
             return requiredAppointments;
         }
 
+        // Method to display the exception message in red
         public static void DisplayError(Exception e)
         {
             Console.ForegroundColor = ConsoleColor.DarkRed;
@@ -223,11 +238,13 @@ namespace ClinicBack
             Console.ResetColor();
         }
 
+        // Method to change date format from dd-mm-yyyy to dd/mm/yyyy
         public static string ChangeFormat(DateTime date)
         {
             return String.Join("/", date.ToShortDateString().Split("-"));
         }
 
+        // Method to convert a string into title case
         public static string TitleCase(string input, params string[] dontCapitalize)
         {
             var split = input.Split(' ');

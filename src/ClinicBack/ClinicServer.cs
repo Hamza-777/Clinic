@@ -7,6 +7,7 @@
         static List<Patient> patients = Utilities.SelectAllPatients();
         static List<Appointment> appointments = Utilities.SelectAllAppointments();
 
+        // Method to log in a user
         public bool LoginUser(string username, string password)
         {
             try
@@ -30,12 +31,14 @@
             }
         }
 
+        // Method to log out a user
         public bool LogoutUser()
         {
             loggedInUser = null;
             return true;
         }
 
+        // Method to return and print the list of doctors
         public List<Doctor> ViewDoctors()
         {
             foreach(Doctor doctor in doctors)
@@ -46,6 +49,7 @@
             return doctors;
         }
 
+        // Method to return and print the list of doctors based on doctors specialization
         public List<Doctor> ViewDoctors(string specialization)
         {
             List<Doctor> specializedDoctors = new List<Doctor>();
@@ -62,6 +66,7 @@
             return specializedDoctors;
         }
 
+        // Method to get the list of patient ids
         public List<int> PatientsList()
         {
             List<int> patientsList = new List<int>();
@@ -74,6 +79,7 @@
             return patientsList;
         }
 
+        // Method to register a new patient
         public bool RegisterNewPatient(string firstname, string lastname, string sex, int age, DateTime dob)
         {
             try
@@ -97,6 +103,7 @@
             }
         }
 
+        // Method to make an appointment for a doctor based on a specialization on given date
         public bool MakeAppointment(int patientId, int doctorId, DateTime visitDate)
         {
             try
@@ -170,6 +177,7 @@
             }
         }
 
+        // Method to cancel an appointment
         public bool CancelAppointment(int patientId, DateTime visitDate)
         {
             try
