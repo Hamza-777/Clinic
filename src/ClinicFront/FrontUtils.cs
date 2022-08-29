@@ -9,6 +9,7 @@ namespace ClinicFront
 {
     internal class FrontUtils
     {
+        // Prints Welcome message in the very beginning of the project
         public static void Welcome()
         {
             Console.ForegroundColor = ConsoleColor.Green;
@@ -18,6 +19,7 @@ namespace ClinicFront
             Console.ResetColor();
         }
 
+        // Gets printed when an invalid option is chosen
         public static void InValidChoice()
         {
             Console.ForegroundColor = ConsoleColor.Red;
@@ -27,6 +29,7 @@ namespace ClinicFront
             Console.ResetColor();
         }
 
+        // Prints when exited the application
         public static void Greetings()
         {
             Console.ForegroundColor = ConsoleColor.Green;
@@ -36,6 +39,7 @@ namespace ClinicFront
             Console.ResetColor();
         }
 
+        // Display options when user is logged in
         public static void LoggedInOptions()
         {
             Console.ForegroundColor = ConsoleColor.DarkMagenta;
@@ -48,6 +52,7 @@ namespace ClinicFront
             WriteLine("\t 5. Log Out");
         }
 
+        // Display options when user is logged out
         public static void LoggedOutOptions()
         {
             Console.ForegroundColor = ConsoleColor.DarkMagenta;
@@ -57,6 +62,7 @@ namespace ClinicFront
             WriteLine("\t 2. Exit Application");
         }
 
+        // Helper mehod to take integer input from user
         public static int UserInputInt(string message)
         {
             WriteLine(message, false);
@@ -64,6 +70,7 @@ namespace ClinicFront
             return res;
         }
 
+        // Helper mehod to take string input from user
         public static string? UserInputString(string message)
         {
             WriteLine(message, false);
@@ -71,6 +78,7 @@ namespace ClinicFront
             return res;
         }
 
+        // Helper mehod to take Date input from user
         public static DateTime UserInputDate(string message)
         {
             WriteLine(message, false);
@@ -86,6 +94,7 @@ namespace ClinicFront
             return res;
         }
 
+        // Helper method for Start loop function
         public static void RunLoop(DateTime startTime, string message)
         {
             Console.ForegroundColor = ConsoleColor.DarkCyan;
@@ -102,6 +111,7 @@ namespace ClinicFront
             Console.ResetColor();
         }
 
+        // Helper method to display a loading effect on performing certain actions
         public static void StartLoop(string message)
         {
             for (int i = 0; i < 7; i++)
@@ -113,6 +123,7 @@ namespace ClinicFront
             Console.WriteLine();
         }
 
+        // Helper method to output string message to the console for both writeline & write
         public static void WriteLine(string message, bool line = true)
         {
             Console.ForegroundColor = ConsoleColor.DarkYellow;
@@ -127,6 +138,7 @@ namespace ClinicFront
             Console.ResetColor();
         }
 
+        // Helper method for UserInputInt method
         public static string? ReadString()
         {
             Console.ForegroundColor = ConsoleColor.DarkGreen;
@@ -135,6 +147,7 @@ namespace ClinicFront
             return res;
         }
 
+        // Helper method for UserInputString method
         public static int ReadInt()
         {
             Console.ForegroundColor = ConsoleColor.DarkGreen;
@@ -143,6 +156,7 @@ namespace ClinicFront
             return res;
         }
 
+        // Takes password without displaying it on the screen
         public static string ReadPassword()
         {
             string password = "";
@@ -158,6 +172,7 @@ namespace ClinicFront
             return password;
         }
 
+        // Firstname & Lastname validator method for detecting special characters
         public static bool ValidateUserName(string? username)
         {
             Regex rgx = new Regex("[^A-Za-z0-9]");
@@ -171,6 +186,7 @@ namespace ClinicFront
             return true;
         }
 
+        // Calculates age given Date Of Birth
         public static int CalculateAge(DateTime dateOfBirth)
         {
             int age = 0;
@@ -181,6 +197,7 @@ namespace ClinicFront
             return age;
         }
 
+        // Validates entered date in the format dd/mm/yyyy
         public static bool ValidateDateFormat(string date)
         {
             Regex regex = new Regex(@"(((0|1)[0-9]|2[0-9]|3[0-1])\/(0[1-9]|1[0-2])\/((19|20)\d\d))$");
@@ -191,6 +208,7 @@ namespace ClinicFront
             return isValid;
         }
 
+        // Checks if entered date is greter then or equal to the present day
         public static bool IsValidDate(DateTime dateone, DateTime datetwo)
         {
             if(dateone.Year >= datetwo.Year)
@@ -207,6 +225,7 @@ namespace ClinicFront
             return false;
         }
 
+        // Changes date format from dd-mm-yyyy to dd/mm/yyyy
         public static string ChangeFormat(DateTime date)
         {
             return String.Join("/", date.ToShortDateString().Split("-"));

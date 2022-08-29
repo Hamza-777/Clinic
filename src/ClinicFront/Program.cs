@@ -48,14 +48,17 @@ namespace ClinicFront
 
         public static void LoggedIn()
         {
+            // Temporary variables for storing varying data
             bool loginLooping = true, success;
             string? firstname, lastname, sex, specialization;
             int age, patientId, doctorId;
-            DateTime? date, currentDate = DateTime.Now;
-            List<string> sexes = new List<string> { "m", "f", "others"};
-            List<string> specials = new List<string> { "general", "internal medicine", "pediatrics", "orthopedics", "opthalmology"};
             List<int> doctorIds = new List<int>(), patientsList;
             List<Doctor> doctors;
+            DateTime? date, currentDate = DateTime.Now;
+
+            // Sex and Specialization allowed values
+            List<string> sexes = new List<string> { "m", "f", "others"};
+            List<string> specials = new List<string> { "general", "internal medicine", "pediatrics", "orthopedics", "opthalmology"};
 
             while (loginLooping)
             {
