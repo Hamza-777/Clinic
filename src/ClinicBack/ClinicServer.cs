@@ -44,6 +44,7 @@
             foreach(Doctor doctor in doctors)
             {
                 Console.WriteLine(doctor.ToString());
+                Console.WriteLine();
             }
 
             return doctors;
@@ -60,6 +61,7 @@
                 {
                     Console.WriteLine(doctor.ToString());
                     specializedDoctors.Add(doctor);
+                    Console.WriteLine();
                 }
             }
 

@@ -151,7 +151,13 @@ namespace ClinicFront
         public static int ReadInt()
         {
             Console.ForegroundColor = ConsoleColor.DarkGreen;
-            int res = Convert.ToInt32(Console.ReadLine());
+            int res;
+            bool isNumber = int.TryParse(Console.ReadLine(), out res);
+            while (!isNumber)
+            {
+                WriteLine("That wasn't a number! Please enter a valid number: ", false);
+                isNumber = int.TryParse(Console.ReadLine(), out res);
+            }
             Console.ResetColor();
             return res;
         }

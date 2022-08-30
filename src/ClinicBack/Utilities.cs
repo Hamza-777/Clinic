@@ -233,6 +233,7 @@ namespace ClinicBack
         // Method to display the exception message in red
         public static void DisplayError(Exception e)
         {
+            Console.WriteLine("");
             Console.ForegroundColor = ConsoleColor.DarkRed;
             Console.WriteLine(e.Message);
             Console.ResetColor();
